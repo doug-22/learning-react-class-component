@@ -11,7 +11,9 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <PrivateRoute isAuthenticated={true} component={DashboardPage} />
+    element: (
+      <PrivateRoute isAuthenticated={true} component={<DashboardPage />} />
+    )
   }
 ]);
 
