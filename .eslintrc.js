@@ -19,7 +19,6 @@ module.exports = {
   plugins: ['react', 'import'],
   rules: {
     'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off',
     'import/no-unresolved': 'error',
     'import/named': 'error',
     'import/default': 'error',
