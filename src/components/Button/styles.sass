@@ -1,0 +1,31 @@
+@use '../../styles/variables'
+
+%button
+  width: 100%
+  height: 56px
+  border-radius: 4px
+
+  font-size: variables.$font-size-small
+  font-weight: variables.$font-weight-bold
+
+  color: variables.$white
+
+  cursor: pointer
+  transition: all ease 0.3s
+
+  &:hover
+    filter: brightness(0.9)
+
+.primary
+  @extend %button
+  background-color: variables.$primary
+
+  &:hover
+    box-shadow: 0 0 6px variables.$primary
+
+.secondary
+  @extend %button
+  background-color: variables.$secondary
+
+  &:hover
+    box-shadow: 0 0 6px variables.$secondary
