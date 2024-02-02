@@ -4,7 +4,7 @@ import './styles.sass';
 
 class Input extends Component {
   render() {
-    const { label, placeholder, onChange, required } = this.props;
+    const { label, placeholder, onChange, required, error } = this.props;
     return (
       <div className="wrapper-input">
         <label htmlFor="">
@@ -16,7 +16,9 @@ class Input extends Component {
           placeholder={placeholder}
           onChange={onChange}
           required={required}
+          className={`${error && 'error'}`}
         />
+        <span className="message-error">{error}</span>
       </div>
     );
   }
@@ -26,7 +28,8 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
 export default Input;

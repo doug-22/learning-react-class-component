@@ -11,6 +11,7 @@
     font-size: 12px
     color: variables.$gray-label
     font-weight: variables.$font-weight-bold
+    margin-left: 0.5rem
 
     span
       color: variables.$error
@@ -25,3 +26,12 @@
 
     font-size: variables.$font-size-small
     color: variables.$border
+
+    &.error
+      border: 2px solid variables.$error
+
+  .message-error
+    color: variables.$error
+    font-weight: variables.$font-weight-bold
+    font-size: variables.$font-size-small
+    margin-left: 0.5rem
