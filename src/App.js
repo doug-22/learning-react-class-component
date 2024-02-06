@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import LoginPage from './pages/Login';
 import DashboardPage from './pages/Dashboard';
-import PrivateRoute from './pages/utils/PrivateRoute';
+import PrivateRoute from './utils/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -11,9 +11,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: (
-      <PrivateRoute isAuthenticated={true} component={<DashboardPage />} />
-    )
+    element: <PrivateRoute component={<DashboardPage />} />
   }
 ]);
 
