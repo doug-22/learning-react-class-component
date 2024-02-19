@@ -6,7 +6,7 @@ class Input extends Component {
   render() {
     const { label, placeholder, onChange, required, error } = this.props;
     return (
-      <div className="wrapper-input">
+      <div className="wrapper-input-component">
         <label htmlFor="">
           {label}
           {required && <span>*</span>}
@@ -25,7 +25,7 @@ class Input extends Component {
 }
 
 Input.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   required: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
