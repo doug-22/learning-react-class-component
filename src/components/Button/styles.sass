@@ -16,6 +16,14 @@
   &:hover
     filter: brightness(0.9)
 
+%icon-button
+  width: 40px
+  height: 40px
+
+  display: flex
+  justify-content: center
+  align-items: center
+
 .primary
   @extend %button
   background-color: variables.$primary
@@ -29,3 +37,25 @@
 
   &:hover
     box-shadow: 0 0 6px variables.$secondary
+
+.icon-button-primary
+  @extend %button
+  @extend %icon-button
+  background-color: transparent
+
+  svg
+    color: variables.$gray-label
+
+  &:hover
+    background-color: variables.$gray-transparent
+
+.icon-button-secondary
+  @extend %button
+  @extend %icon-button
+  background-color: variables.$primary
+
+  svg
+    color: variables.$white
+
+  &:hover
+    filter: brightness(0.9)
