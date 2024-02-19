@@ -5,7 +5,11 @@ import './styles.sass';
 class Divider extends Component {
   render() {
     const { text } = this.props;
-    return <div className="wrapper-divider">{text && <span>{text}</span>}</div>;
+    return (
+      <div className="wrapper-divider-component">
+        {text && <span>{text}</span>}
+      </div>
+    );
   }
 }
 
