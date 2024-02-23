@@ -11,6 +11,9 @@ import Card from '../../components/Card';
 import { getItemLocalStorage, setItemLocalStorage } from '../../functions';
 import { PiListFill } from 'react-icons/pi';
 import AddRepositoryButton from '../../components/AddRepositoryButton';
+import AuthService from '../../services/authService';
+import RepoService from '../../services/repoService';
+import ModalDelete from '../../components/ModalDelete';
 
 class DashboardPage extends Component {
   constructor(props) {
@@ -23,7 +26,10 @@ class DashboardPage extends Component {
       search: '',
       view: 'card',
 
-      cards: []
+      cards: [],
+
+      openModal: false,
+      dataModal: null
     };
 
     this.handleSelectFilter = this.handleSelectFilter.bind(this);
@@ -32,18 +38,21 @@ class DashboardPage extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.handleOnFavorite = this.handleOnFavorite.bind(this);
     this.handleOnDelete = this.handleOnDelete.bind(this);
+    this.handleOpenModalDelete = this.handleOpenModalDelete.bind(this);
     this.handleToogleView = this.handleToogleView.bind(this);
+    this.fetchRepo = this.fetchRepo.bind(this);
   }
 
   componentDidMount() {
-    const repos = JSON.parse(getItemLocalStorage('CARDS'));
-    const darkMode = JSON.parse(getItemLocalStorage('DARK_MODE'));
+    this.fetchUser();
+    const repos = getItemLocalStorage('REPOS');
+    const darkMode = getItemLocalStorage('DARK_MODE');
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-    this.setState({ ...this.state, cards: repos, darkMode: darkMode });
+    this.setState({ ...this.state, cards: repos ?? [], darkMode: darkMode });
   }
 
   handleSelectFilter(value) {
@@ -79,15 +88,59 @@ class DashboardPage extends Component {
       return item;
     });
     this.setState({ ...this.state, cards: cards });
-    setItemLocalStorage('CARDS', JSON.stringify(cards));
+    setItemLocalStorage('REPOS', cards);
+  }
+
+  handleOpenModalDelete(value) {
+    const repo = this.state.cards.find((item) => item.id === value);
+    this.setState({
+      ...this.state,
+      openModal: !this.state.openModal,
+      dataModal: repo
+    });
   }
 
   handleOnDelete(value) {
-    console.log(value);
+    const repos = this.state.cards.filter((item) => item.id !== value);
+    this.setState({
+      ...this.state,
+      openModal: !this.state.openModal,
+      cards: repos
+    });
+    setItemLocalStorage('REPOS', repos);
+  }
+
+  async fetchUser() {
+    const response = await AuthService.getUser();
+    if (response.status === 'success') {
+      setItemLocalStorage('USERNAME', response.data.login);
+    }
+  }
+
+  async fetchRepo(repoName) {
+    const response = await RepoService.getRepoByName(repoName);
+    if (response.status === 'success') {
+      const repo = {
+        id: response.data.id,
+        name: response.data.name,
+        stars: response.data.stargazers_count,
+        forks: response.data.forks_count,
+        openIssues: response.data.open_issues_count,
+        age: response.data.created_at,
+        lastCommit: response.data.pushed_at,
+        license: response.data.license,
+        language: response.data.language,
+        favorite: false
+      };
+      RepoService.setRepo(repo);
+      const repos = getItemLocalStorage('REPOS');
+      this.setState({ ...this.state, cards: repos });
+    }
   }
 
   render() {
-    const { filterBy, favorite, cards, search, view } = this.state;
+    const { filterBy, favorite, cards, search, view, openModal, dataModal } =
+      this.state;
 
     const cardsFiltered = cards
       .sort((a, b) => {
@@ -162,7 +215,7 @@ class DashboardPage extends Component {
               value={view}
               onClick={this.handleToogleView}
             />
-            <AddRepositoryButton />
+            <AddRepositoryButton handleSubmit={this.fetchRepo} />
           </div>
         </div>
 
@@ -173,12 +226,20 @@ class DashboardPage extends Component {
                 key={item.id}
                 data={item}
                 onFavorite={this.handleOnFavorite}
-                onDelete={this.handleOnDelete}
+                onDelete={this.handleOpenModalDelete}
                 type={view}
               />
             ))}
           </div>
         </div>
+
+        {openModal && (
+          <ModalDelete
+            data={dataModal}
+            onClose={this.handleOpenModalDelete}
+            onDelete={this.handleOnDelete}
+          />
+        )}
       </main>
     );
   }

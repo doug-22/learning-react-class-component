@@ -2,6 +2,9 @@ import { Component } from 'react';
 import './styles.sass';
 import Button from '../Button';
 import { AiOutlinePlus } from 'react-icons/ai';
+// import RepoService from '../../services/repoService';
+import { getItemLocalStorage } from '../../functions';
+import PropTypes from 'prop-types';
 
 class AddRepositoryButton extends Component {
   constructor(props) {
@@ -18,7 +21,12 @@ class AddRepositoryButton extends Component {
   }
 
   addRepository() {
-    console.log('aqui', this.state.value);
+    const repos = getItemLocalStorage('REPOS') ?? [];
+    if (repos.find((item) => item?.name === this.state.value)) {
+      return;
+    }
+    this.props.handleSubmit(this.state.value);
+    this.handleOpenModal();
   }
 
   onChange(e) {
@@ -27,7 +35,6 @@ class AddRepositoryButton extends Component {
   }
 
   handleOpenModal() {
-    console.log('asdas');
     this.setState({ open: !this.state.open });
   }
 
@@ -76,5 +83,9 @@ class AddRepositoryButton extends Component {
     );
   }
 }
+
+AddRepositoryButton.propTypes = {
+  handleSubmit: PropTypes.func.isRequired
+};
 
 export default AddRepositoryButton;

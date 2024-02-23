@@ -7,6 +7,8 @@ import Divider from '../../components/Divider';
 import AuthService from '../../services/authService';
 import { withRouter } from '../../utils/withRouter';
 
+const URL = `https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+
 class LoginPage extends Component {
   constructor(props) {
     super(props);
@@ -26,13 +28,37 @@ class LoginPage extends Component {
     this.props.navigate('/dashboard');
   }
 
+  handleLoginWithGitHub() {
+    window.location.href = URL;
+  }
+
+  async componentDidMount() {
+    const url = window.location.href;
+    const hasCode = url.includes('?code=');
+
+    if (hasCode) {
+      const code = url.split('?code=')[1];
+      this.getAccessToken(code);
+    }
+  }
+
+  async getAccessToken(code) {
+    const response = await AuthService.loginWithGithub(code);
+    if (response.status === 'success') {
+      this.props.navigate('/dashboard');
+    }
+  }
+
   render() {
     return (
       <main>
         <div className="wrapper-form">
           <AiFillGithub className="icon-login" size={50} />
           <h1 className="title-login">Sign In</h1>
-          <Button label="Entrar com Github" onClick={this.teste} />
+          <Button
+            label="Entrar com Github"
+            onClick={this.handleLoginWithGitHub}
+          />
           <Divider text="ou entre com o seu nome" />
           <form onSubmit={this.handleSubmit}>
             <Input
