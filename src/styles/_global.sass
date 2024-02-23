@@ -1,0 +1,81 @@
+@use './variables'
+
+*
+  padding: 0
+  margin: 0
+  box-sizing: border-box
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+
+button
+  border: none
+  outline: none
+
+input
+  outline: none
+
+ul
+  list-style: none
+
+html
+  &.dark
+    .wrapper-header-dashboard
+      background-color: variables.$background-dark-mode
+      svg, h1
+        color: variables.$white !important
+
+    .wrapper-body-dashboard
+      background-color: variables.$gray-label
+
+    .wrapper-card-component
+      background-color: variables.$background-dark-mode
+      .header-card
+        color: variables.$white
+        .wrapper-icons
+          svg
+            color: variables.$white
+      .body-card
+        color: variables.$white
+
+    .wrapper-input-search-component
+      input
+        background-color: variables.$gray-label
+        color: variables.$white
+
+        &::placeholder
+          color: variables.$white
+
+    .wrapper-input-select
+      input
+        background-color: variables.$background-dark-mode
+        color: variables.$white
+
+        &:focus
+          background-color: variables.$gray-label
+
+        &.valid
+          background-color: variables.$gray-label
+
+    #wrapper-options-select
+      background-color: variables.$background-dark-mode
+      border: 1px solid variables.$background-dark-mode
+      box-shadow: 1px 1px 2px 1px variables.$shadow
+
+      li
+        color: variables.$white
+
+        &:hover
+          background-color: variables.$gray-label
+
+    .wrapper-add-repository-content
+      background-color: variables.$background-dark-mode
+      border: 1px solid variables.$background-dark-mode
+      box-shadow: 1px 1px 2px 1px variables.$shadow
+
+    .wrapper-add-repository-input
+      color: variables.$white
+      input
+        background-color: variables.$gray-label !important
+        color: variables.$white
+
+        &::placeholder
+          color: variables.$white

@@ -1,0 +1,72 @@
+@use '../../styles/variables'
+
+%background
+  border-radius: 5px
+  background-color: variables.$white
+  box-shadow: 1px 1px 3px variables.$shadow
+
+.wrapper-card-component
+  &.card
+    width: 300px
+    @extend %background
+
+  &.list
+    width: 100%
+    @extend %background
+
+  .header-card
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 5px
+
+    &.card
+      border-bottom: 1px solid variables.$border
+
+    &.list
+      justify-content: flex-start
+      .wrapper-icons
+        margin-left: auto
+
+    img
+      width: 40px
+      height: 40px
+
+    h1
+      font-size: variables.$font-size-small
+
+    .wrapper-icons
+      display: flex
+
+      button
+        width: 30px
+        height: 30px
+
+        svg
+          width: 15px
+          height: auto
+
+  .body-card
+    padding: 10px
+    display: flex
+
+    &.card
+      flex-direction: column
+    &.list
+      flex-direction: row
+      gap: 1rem
+      color: variables.$gray-label
+
+    p
+      font-size: variables.$font-size-small
+
+  .footer-card
+    padding: 10px
+
+    span
+      padding: 2px 5px
+      border-radius: 4px
+      border: 1px solid variables.$warning
+      color: variables.$warning
+      font-size: variables.$font-size-small
+      font-weight: variables.$font-weight-bold

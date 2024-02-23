@@ -1,0 +1,77 @@
+@use '../../styles/variables'
+
+.wrapper-select-component
+  position: relative
+
+  width: 100%
+  max-width: 200px
+
+  &.button-toogle
+    width: max-content
+    max-width: max-content
+
+  .wrapper-input-select
+    width: 100%
+
+    input
+      width: 100%
+      height: 38px
+      border-radius: 4px
+      padding-left: 10px
+
+      border: none
+      outline: none
+
+      &::placeholder
+        color: variables.$gray-label
+
+      &:hover
+        border: 1px solid variables.$border
+
+      &:focus
+        background-color: variables.$hover
+
+      &.valid
+        background-color: variables.$hover
+        border: 1px solid variables.$border
+
+    .arrow-select
+      position: absolute
+      right: 0
+      top: 50%
+      transform: translate(-50%, -50%)
+
+      color: variables.$gray-label
+
+#wrapper-options-select
+  position: absolute
+  width: 100%
+  margin-top: 10px
+
+  border-radius: 4px
+  padding: 5px 0
+
+  display: flex
+  flex-direction: column
+  background-color: variables.$white
+  border: 1px solid variables.$hover
+  box-shadow: 1px 1px 2px 1px variables.$border
+
+  li
+    padding: 5px
+    font-size: variables.$font-size-small
+
+    display: flex
+    align-items: center
+
+    &:hover
+      cursor: pointer
+      background-color: variables.$hover
+
+  &.options-open
+    display: block
+    &.button-toogle
+      width: 100px
+
+  &.options-close
+    display: none

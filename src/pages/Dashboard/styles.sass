@@ -1,0 +1,44 @@
+@use '../../styles/variables'
+
+main
+  width: 100%
+  height: 100vh
+
+  display: flex
+  flex-direction: column
+
+  .wrapper-header-dashboard
+    width: 100%
+    height: 60px
+
+    .header-dashboard
+      width: 100%
+      max-width: 1280px
+      height: 100%
+      margin: auto
+
+      display: flex
+      justify-content: space-between
+      align-items: center
+      padding: 0px 20px
+
+      .icon-github
+        color: variables.$gray-label
+
+      .header-title
+        font-size: variables.$font-size-large
+        color: variables.$gray-label
+
+  .wrapper-body-dashboard
+    width: 100%
+    height: 100%
+    max-width: 1280px
+    margin: auto
+    padding: 30px
+
+    background-color: variables.$background-dash
+
+    .wrapper-cards
+      display: flex
+      flex-wrap: wrap
+      gap: 15px

@@ -1,0 +1,25 @@
+@use '../../styles/variables'
+
+%line
+  content: ""
+  width: 100%
+  height: 0.1px
+  background-color: variables.$gray-label
+
+.wrapper-divider-component
+  width: 100%
+
+  span
+    white-space: nowrap
+    color: variables.$gray-label
+    display: flex
+    align-items: center
+    line-height: 50px
+
+    &::before
+      @extend %line
+      margin-right: 5px
+
+    &::after
+      @extend %line
+      margin-left: 5px

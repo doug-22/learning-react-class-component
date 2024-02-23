@@ -1,0 +1,70 @@
+@use '../../styles/variables'
+
+.wrapper-modal-delete-component
+  position: fixed
+  width: 100vw
+  height: 100vh
+  display: flex
+  background-color: rgba(57, 58, 74, 0.5)
+
+  .wrapper-modal-container
+    width: 350px
+    margin: auto
+    background-color: variables.$white
+    border-radius: 0.4rem
+    box-shadow: 1px 1px 2px 1px variables.$border
+
+    .wrapper-header-modal
+      padding: 0.5rem
+      border-bottom: 1px solid variables.$warning
+      background-color: rgba(255, 244, 236, 1)
+      border-radius: 0.4rem 0.4rem 0 0
+
+      display: flex
+      align-items: center
+      justify-content: space-between
+
+      svg
+        color: variables.$warning
+
+      div
+        display: flex
+        align-items: center
+        gap: 1rem
+
+        h3
+          color: variables.$warning
+
+    .wrapper-body-modal
+      padding: 0.5rem
+
+    .wrapper-footer-modal
+      display: flex
+      gap: 0.5rem
+      justify-content: flex-end
+      padding: 0.5rem
+      border-top: 1px solid variables.$border
+
+      .button-cancel-delete, .button-confirm-delete
+        min-width: 70px
+        padding: 0.5rem 1rem
+        border-radius: 4px
+        cursor: pointer
+        font-weight: variables.$font-weight-bold
+        transition: all ease 0.3s
+
+      .button-cancel-delete
+        background-color: variables.$white
+        border: 1px solid variables.$border
+        color: variables.$gray-label
+        &:hover
+          background-color: variables.$gray-transparent
+
+      .button-confirm-delete
+        background-color: variables.$warning
+        color: variables.$white
+        &:hover
+          box-shadow: 0 0 6px variables.$warning
+
+        &:disabled
+          opacity: 0.7
