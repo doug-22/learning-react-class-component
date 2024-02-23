@@ -1,16 +1,19 @@
 import { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import AuthService from '../services/authService';
 
 class PrivateRoute extends Component {
   render() {
-    const { isAuthenticated, component } = this.props;
-    return isAuthenticated ? component : <Navigate to="/" />;
+    const { component } = this.props;
+    if (!AuthService.isAuthenticated()) {
+      return <Navigate to="/" />;
+    }
+    return component;
   }
 }
 
 PrivateRoute.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
   component: PropTypes.element.isRequired
 };
 

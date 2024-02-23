@@ -4,6 +4,10 @@ import Input from '../../components/Input';
 import { AiFillGithub } from 'react-icons/ai';
 import './styles.sass';
 import Divider from '../../components/Divider';
+import AuthService from '../../services/authService';
+import { withRouter } from '../../utils/withRouter';
+
+const URL = `https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
 
 class LoginPage extends Component {
   constructor(props) {
@@ -11,10 +15,38 @@ class LoginPage extends Component {
     this.state = { value: '' };
 
     this.onChange = this.onChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   onChange(e) {
     this.setState({ value: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    AuthService.login(this.state.value);
+    this.props.navigate('/dashboard');
+  }
+
+  handleLoginWithGitHub() {
+    window.location.href = URL;
+  }
+
+  async componentDidMount() {
+    const url = window.location.href;
+    const hasCode = url.includes('?code=');
+
+    if (hasCode) {
+      const code = url.split('?code=')[1];
+      this.getAccessToken(code);
+    }
+  }
+
+  async getAccessToken(code) {
+    const response = await AuthService.loginWithGithub(code);
+    if (response.status === 'success') {
+      this.props.navigate('/dashboard');
+    }
   }
 
   render() {
@@ -25,24 +57,22 @@ class LoginPage extends Component {
           <h1 className="title-login">Sign In</h1>
           <Button
             label="Entrar com Github"
-            onClick={() => console.log('clicou')}
+            onClick={this.handleLoginWithGitHub}
           />
           <Divider text="ou entre com o seu nome" />
-          <Input
-            label="Nome"
-            placeholder="Insira o seu nome"
-            onChange={this.onChange}
-            required
-          />
-          <Button
-            label="Entrar"
-            type="secondary"
-            onClick={() => console.log(this.state.value)}
-          />
+          <form onSubmit={this.handleSubmit}>
+            <Input
+              label="Nome"
+              placeholder="Insira o seu nome"
+              onChange={this.onChange}
+              required
+            />
+            <Button label="Entrar" variant="secondary" type="submit" />
+          </form>
         </div>
       </main>
     );
   }
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);

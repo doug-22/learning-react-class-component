@@ -4,20 +4,29 @@ import './styles.sass';
 
 class Button extends Component {
   render() {
-    const { label, onClick, type = 'primary' } = this.props;
+    const {
+      label,
+      onClick,
+      variant = 'primary',
+      type = 'button',
+      icon
+    } = this.props;
 
     return (
-      <button className={type} onClick={onClick}>
+      <button className={variant} onClick={onClick} type={type}>
         {label}
+        {icon}
       </button>
     );
   }
 }
 
 Button.propTypes = {
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  type: PropTypes.string
+  label: PropTypes.string,
+  onClick: PropTypes.func,
+  variant: PropTypes.string,
+  type: PropTypes.string,
+  icon: PropTypes.element
 };
 
 export default Button;

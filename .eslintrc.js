@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'import/no-unresolved': 'error',
+    'react/prop-types': 'off',
     'import/named': 'error',
     'import/default': 'error',
     'import/export': 'error'
